@@ -27,13 +27,12 @@ def inception_block(inputs, filter1, filter3_reduce, filter3, filter5_reduce, fi
 
 
 def inception_v1(inputs):
-    """
-        inception:
-            1.  丢弃参数量巨大的全连接层，使得参数量只有alexnet的1/10
-            2.  全连接层具有过拟合的风险
-            3.  inception block采用network in network的思想，
-                使用1*1的卷积核降低通道数量，跨通道组织信息，减少参数量，
-                同时，将3*3,5*5的卷积核提取的feature进行整合，使得感受野更加多样化，特征更加丰富
+    """Inception
+    1.discard dense layer that has too many params
+    2.dense layer can overfit
+    3.network in network: Use conv_1X1 to reduce params and use conv_3X3, conv_5X5 to make
+      [receptive field rich]. Make feature rich.
+
     """
     x = layers.Conv2D(64, 7, 2, padding='same', activation='relu')(inputs)
     x = layers.MaxPool2D(3, 2, padding='same')(x)
